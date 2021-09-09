@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
     static char *mm[] = {"No Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
 
     if(yearday > 366){
-        printf("\n El año no tiene más de 366 días\n");
+        printf("El año no tiene más de 366 días\n");
         return 0;
     }
     else if(year < 0){
