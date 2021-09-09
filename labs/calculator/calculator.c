@@ -48,35 +48,50 @@ long calc(int operator, int nValues, int *values) {
 
     printf(" = ");
     //printf("\n%s",charRes);
-    printf("%i",res);
+    printf("%i\n",res);
 
     return 0;
 }
 
-int main(int argc, char* argv[]) {
-    int counter;
-    int operator = 0;
-    int values[argc-2];
-    for (int i = 1; i < argc; i++)
-    {
-        values[i-1]=atoi(argv[i+1]);
+int main(int argc, char **argv[]) {
+    if(argc < 3){
+        printf("Not enough data \n");
+        return -1;
     }
-    int nValues = argc-2;
+    //printf("Initialize");
+    int in = 0;
+    int counter;
+    char* aux= argv[1];
+    int operator = 0;
+    char *next;
+    long curr;
+    int *values = malloc(sizeof(int) * (argc - 2));;
+    for(int i = 2; i < argc; i++){
+       curr = strtol(argv[i], &next, 10);
+       if(*next != '\0'){
+           printf("Error\n");
+           return -1;
+       }else{
+           values[in] = (int)curr;
+           in++;
+       }
+    }
+    //int nValues = argc-2;
 
     if(argc==1)
         printf("\nNo Extra Command Line Argument Passed Other Than Program Name");
     if(argc>3){
-        if(strcmp(argv[1],"add")==0){
+        if(strcmp(aux,"add")==0){
             operator=1;
-        }else if(strcmp(argv[1],"sub")==0){
+        }else if(strcmp(aux,"sub")==0){
             operator=2;
-        }else if(strcmp(argv[1],"mult")==0){
+        }else if(strcmp(aux,"mult")==0){
             operator=3;
         }else{
             printf("\n Identificador inválido");
             return 0;
         }
-        calc(operator,nValues,values);
+        calc(operator,argc-2,values);
   
     }
 
