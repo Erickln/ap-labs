@@ -2,17 +2,28 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"io"
 	"log"
 	"net"
+	"os"
+	"strconv"
 	"time"
 )
 
-func handleConn(c net.Conn) {
+func handleConn(c net.Conn, tz string) {
 	defer c.Close()
+
+	l, e := time.LoadLocation(tz)
+	if e != nil {
+		log.Fatal("ERROR: Time zone unkwnown: " + tz)
+		return
+	}
+
 	for {
-		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))
-		if err != nil {
+
+		if _, e := io.WriteString(c, time.Now().In(l).Format("15:04:05")+","+tz); e != nil {
 			return // e.g., client disconnected
 		}
 		time.Sleep(1 * time.Second)
@@ -20,16 +31,24 @@ func handleConn(c net.Conn) {
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:9090")
-	if err != nil {
-		log.Fatal(err)
+	var port = flag.Int("port", 9090, "Port to run the server on")
+	flag.Parse()
+	var TZ = os.Getenv("TZ")
+	if TZ == "" {
+		log.Fatal("ERROR: No env variable TZ provided")
+		return
+	}
+	listener, e := net.Listen("tcp", "localhost:"+strconv.Itoa(*port))
+	fmt.Println("Server up in", "localhost:", *port, "| With time zone:", TZ)
+	if e != nil {
+		log.Fatal(e)
 	}
 	for {
-		conn, err := listener.Accept()
-		if err != nil {
-			log.Print(err) // e.g., connection aborted
+		conn, e := listener.Accept()
+		if e != nil {
+			log.Print(e) // e.g., connection aborted
 			continue
 		}
-		go handleConn(conn) // handle connections concurrently
+		go handleConn(conn, TZ) // handle connections concurrently
 	}
 }
