@@ -129,7 +129,7 @@ int main(){
             for (y = 0; y < sizey; y ++) {
             printf("|");
                 for (x = 0; x < sizex; x ++) {
-                    printf("%c",world[y][x]);
+                    printf("%c",world[y][x]); //world[] has the enmies written and everything else are empty spaces
                 }
             printf("|");
             printf("\n");
@@ -157,23 +157,29 @@ int main(){
         for (x = 0; x < sizex; x ++) {
             for (y = 0; y < sizey; y ++) {
                 //if there is an enemy or enemyShielded in the position and 
-                //there is no a playerLaser below the position of the projectile
+                //there is no a playerLaser below
+                //and a probability of 1/10
                 if (
                 (world[y][x] == enemyShielded | world[y][x] == enemy) 
                 && (rand () % 11) > 9
                 && world[y+1][x] != playerLaser) {
-                    for (yi = y+1; yi < sizey; yi ++) {
+                    //if the space below o the [x][y] is an enemy or an enemyShielded enemyReady is set to 0
+                    //else enemyReady is set to 1
+                    //Therefore there is no enemies below the previous selected enemy
+                    for (yi = y+1; yi < sizey; yi ++) { //yi represents every position below the selected enemy
                         if (world[yi][x] == enemy
                         | world[yi][x] == enemyShielded) {
                             enemyReady = 0;
                             break;
+                        }else{
+                            enemyReady = 1;
                         }
-                        enemyReady = 1;
                     }
                     if (enemyReady) {
                         world[y+1][x] = enemyLaser;
                     }
                 }
+                //
                 if (world[y][x] == playerLaser && world[y-1][x] == enemy) {
                     world[y][x] = ' ';
                     world[y-1][x] = explosion;
