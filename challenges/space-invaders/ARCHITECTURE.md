@@ -1,6 +1,6 @@
 # Space Invaders in C
-
-The game consists in the implementation of the classic game space invaders using the multithreading C library [pthread](https://man7.org/linux/man-pages/man7/pthreads.7.html),
+In the late 1970s and 1980s arcade games were created that became history such as Space Invaders, Donkey Kong, Pac Man, Defender, Galaga and so on.
+We decided to implement the space invaders game using the multithreading C library [pthread](https://man7.org/linux/man-pages/man7/pthreads.7.html),
 each of the enemies is being created within a thread that implements the behaviour of movement and shooting, the player can shoot and move via keyboard input.
 
 ## Notable Components
@@ -20,12 +20,3 @@ each of the enemies is being created within a thread that implements the behavio
 `enemyBehaviour: void` This function purpose is to create an instance of an enemy, give random movement and random shooting intervals, the bullets are created in other threads. 
 
 `enemyBulletThread: void` Implements the behaviour of an enemy bullet.
-
-## Process diagram
-
-![process diagram](./process_diagram.png)
-
-
-## Activity diagram
-
-![process diagram](./Activity_diagram.png)
