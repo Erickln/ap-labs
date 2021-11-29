@@ -2,6 +2,7 @@
 In the late 1970s and 1980s arcade games were created that became history such as Space Invaders, Donkey Kong, Pac Man, Defender, Galaga and so on.
 We decided to implement the space invaders game using the multithreading C library [pthread](https://man7.org/linux/man-pages/man7/pthreads.7.html),
 each of the enemies is being created within a thread that implements the behaviour of movement and shooting, the player can shoot and move via keyboard input.
+The player can move to the left with the A key, to the right with the D key and shot with the Space bar.
 
 ## Notable Components
 
