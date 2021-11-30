@@ -7,18 +7,18 @@ int DEBUG = 0;
 int RUNNING;
 
 int score = 0;
-int lives = 10;
 int enemies = 0;
+int lives = 10;
 
 int playerX = 17;
 int board[31][12];
 
-void initBoard();
 void drawBoard();
+void initBoard();
 void drawUI(int debug);
 void *enemyBehaviour(void *args);
-void *enemyBulletThread(void *args);
 void *playerBulletThread(void *args);
+void *enemyBulletThread(void *args);
 void *playerMonitor(void *args);
 
 
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     DEBUG = argc > 1? 1 : 0;
     RUNNING = 1;
 
-    printf("How many enemies do you want? ");
+    printf("How many enemies do you want to destroy? ");
     scanf("%d", &enemies);
 
     pthread_t monitor;
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
         } else if(enemies == 0)
         {
             RUNNING = 0;
-            printf("Congratulations, You won!\n");
+            printf("Congratulations, You destroyed all the enemies!\n");
             break;
         } else{
             usleep(50000);
